@@ -8,7 +8,12 @@ This repository is a **Certified** level project. It's a community contributed p
 and trusted to use with Conjur Open Source**. For more detailed information on our certification levels, see [our community guidelines](https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md#certified).
 
 ## Features
+The following features are available with the Terraform Provider Plugin:
+* Retrieve a single secret from the CyberArk Vault by specifying the path to the secret in the main.tf file or environment variable.
 
+## Limitations
+
+The Terraform Provider Plugin does not support creating, deleting, or updating secrets.
 
 ## Technical Requirements
 
@@ -17,14 +22,10 @@ and trusted to use with Conjur Open Source**. For more detailed information on o
 | GO             |   1.19   |
 | Conjur OSS     |  1.9+    |
 | Conjur Enterprise | 12.5  |
-|ConjurSDK(GO)   |  0.10.1    |
+|ConjurSDK(GO)   |  0.10.1  |
 |Conjur API      |  5.1     |
 
-## Prerequisites
-
-The following are prerequisites to using the Terraform Provider Plugin.
-
-### 1.Conjur setup
+## Using terraform-provider-conjur with Conjur Open Source 
 
 Are you using this project with [Conjur Open Source](https://github.com/cyberark/conjur)? Then we 
 **strongly** recommend choosing the version of this project to use from the latest [Conjur OSS 
@@ -34,6 +35,14 @@ compatibility. When possible, upgrade your Conjur version to match the
 [latest suite release](https://docs.conjur.org/Latest/en/Content/ReleaseNotes/ConjurOSS-suite-RN.htm); 
 when using integrations, choose the latest suite release that matches your Conjur version. For any 
 questions, please contact us on [Discourse](https://discuss.cyberarkcommons.org/c/conjur/5).
+
+## Prerequisites
+
+The following are prerequisites to using the Terraform Provider Plugin.
+
+### 1.Conjur setup
+
+You need to Setup Conjur OSS locally. To setup Conjur OSS follow Conjur quickstart [Cyberark-Conjur-OSS](https://github.com/cyberark/conjur-quickstart)
 
 ### 2.Binaries 
 The recommended way to install `terraform-provider-conjur` is to use the binary distributions from this project's
