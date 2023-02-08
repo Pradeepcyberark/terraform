@@ -14,10 +14,10 @@ and trusted to use with Conjur Open Source**. For more detailed information on o
 
 |  Technology    |  Version |
 |----------------|----------|
-| GO             |          |
+| GO             |   1.19   |
 | Conjur OSS     |  1.9+    |
 | Conjur Enterprise | 12.5  |
-|ConjurSDK(GO)   |          |
+|ConjurSDK(GO)   |  0.10.1    |
 |Conjur API      |  5.1     |
 
 ## Prerequisites
