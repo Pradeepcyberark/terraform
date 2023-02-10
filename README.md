@@ -55,8 +55,8 @@ _Note: Replace `$VERSION` with the one you want to use. See [releases](https://g
 page for available versions._
 
 ```sh-session
-$ wget https://github.com/cyberark/terraform-provider-conjur/releases/download/v$VERSION/terraform-provider-conjur-$VERSION-linux-amd64.tar.gz
-$ tar -xvf terraform-provider-conjur*.tar.gz
+$ wget https://github.com/cyberark/terraform-provider-conjur/releases/download/v$VERSION/terraform-provider-conjur-$VERSION.tar.gz
+$ tar -xvf terraform-provider-conjur-$VERSION.tar.gz
 ```
 
 ### 3.Homebrew (MacOS)
@@ -110,9 +110,10 @@ $ cd terraform-provider-conjur
 - Build the provider
 
 ```sh-session
-$ mkdir -p ~/.terraform.d/plugins/
+$ mkdir -p ~/.terraform.d/plugins/terraform.example.com/cyberark/conjur/$VERSION/$platform_reference_in_go
+$ # Example: platform_reference_in_go= darwin_amd64
 $ # Note: If a static binary is required, use ./bin/build to create the executable
-$ go build -o ~/.terraform.d/plugins/terraform-provider-conjur main.go
+$ go build -o ~/.terraform.d/plugins/terraform.example.com/cyberark/conjur/$VERSION/$platform_reference_in_go/terraform-provider-conjur main.go
 ```
 
 ## Terrafrom Provider Usage
@@ -266,5 +267,26 @@ $ summon terraform apply
 ```
 
 ---
-  
-  
+ 
+## Contributing
+
+We welcome contributions of all kinds to this repository. For instructions on how to get started and descriptions of our development workflows, please see our [contributing
+guide][contrib].
+
+[contrib]: CONTRIBUTING.md
+
+## License
+
+Copyright 2016-2022 CyberArk
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.  
