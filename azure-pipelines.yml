@@ -12,11 +12,9 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
-- task: getConjureSecretSC@0
+- task: secretBatchRetrievalConnector@0
   inputs:
-    ConjurService: 'Brien service connect'
-    conjursecretvar: 'asgdyba'
+    ConjurService: 'batch retrival'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
