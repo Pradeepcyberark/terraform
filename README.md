@@ -115,6 +115,36 @@ $ # Example: platform_reference_in_go= darwin_amd64
 $ # Note: If a static binary is required, use ./bin/build to create the executable
 $ go build -o ~/.terraform.d/plugins/terraform.example.com/cyberark/conjur/$VERSION/$platform_reference_in_go/terraform-provider-conjur main.go
 ```
+### Access from Terraform Registry
+To use the Conjur Terraform Provider from the Terraform Registry:
+
+In main.tf use registry.terraform.io/cyberark/conjur in source and replace version with the latest 
+
+```sh-session
+  terraform {
+    required_providers {
+      conjur = {
+        source  = “registry.terraform.io/cyberark/conjur"
+        version = "~> 0"
+      }
+    }
+  }
+  provider "conjur" {
+    # All variables required for API Key, or Access Token authentication for Conjur Server. Refer to the Usage section for details.
+  }
+  data "conjur_secret" "dbpass" {
+    name = "App/secretVar"
+  }
+  output "dbpass-to-output" {
+    value = data.conjur_secret.dbpass.value
+    sensitive = true
+  }
+  resource "local_file" "dbpass-to-file" {
+    content = data.conjur_secret.dbpass.value
+    filename = "${path.module}/../dbpass"
+    file_permission = "0664"
+  }
+```
 
 ## Terrafrom Provider Usage
 
@@ -140,7 +170,7 @@ The provider uses [conjur-api-go](https://github.com/cyberark/conjur-api-go) to 
 configuration. `conjur-api-go` can be configured using environment variables or using the
 provider configuration in the `.tf` file.
 
-### Option 1: Using environment variables
+### Option 1: Using environment variables for API Key Authentication 
 
 ```sh-session
 export CONJUR_APPLIANCE_URL="https://conjur-server"
@@ -156,8 +186,19 @@ No other configuration is necessary in `main.tf`:
 # main.tf
 provider "conjur" {}
 ```
+### Option 2: Using environment variables for Access Token
 
-### Option 2: Using attributes
+```sh-session
+export CONJUR_APPLIANCE_URL="https://conjur-server"
+export CONJUR_ACCOUNT="myorg"
+export CONJUR_AUTHN_TOKEN='{                       
+  "protected": "eyJhbGciOiJjb25qdXIub3JnL3Nsb3NpbG8vdjIiLCJraWQiOiJhMjA1NmEwYTk4OWU5ZmEyMTVmMTQwNDlmZmIyMTc3N2QxN2QyMjlmNjc2MGI3YjJkNmZhY2UwMjQ2NmNkMDg0In0=",
+  "payload": "eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY2NjIwODQ4NiwiaWF0IjoxNjY2MjA4MDA2fQ==",
+  "signature": "RiwpMqGfWKgN5fTWv9JY6XUmNGLrsrx6mIjLllt0NN8n2VoZCMqXOaoicSyan0w3aJ2Z-eAqi46-nko24qOYw6iybg7AIi9ws7G-d68IIgY0GMYbT4LGDb8GaHeN_y6eOpBMJHHyiHnaOeP5d8h47wLSzdPsaVzPpzd_lczJJSiUg11Qzh6_OxLAsF9Us80Ta-O320HSHg3IXzw-792eKUubAHPOUAY04xYhgoZ-vQbjQkOBmH8vAwnUQ10l_7w1A9upRDnulCK4KDl8VPAvBI1XhyiqIbxrcCZWfreVt0S6rvl3aTkeYbBPRh4vXpRP5KDKp6lznUi6dl75ZHfSbX_OHUNpiCZiY2wCRm69s2C4Ww5mvNq20fUvsf8tclVV"
+}'
+```
+
+### Option 3: Using attributes
 
 In addition, the provider can be configured using attributes in the
 configuration. Attributes specified in `main.tf` override the configuration loaded by
